@@ -1,5 +1,8 @@
 package int371.project.EventMod.Models;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,10 +11,20 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 
 @Entity
 @Table(name = "accounts")
-public class Accounts {
+public class Accounts extends User implements Serializable {
+
+	public Accounts() {
+		super("anonymous", "", new ArrayList<>());
+	}
+
+	public Accounts(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+		super(username, password, authorities);
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
